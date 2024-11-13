@@ -1,13 +1,13 @@
 <?php
-// 1. Récupérer l'URL demandée
-$requestUri = $_SERVER['REQUEST_URI'];
 
-// Liste des routes
-$routes = [
-    '/' => 'Page d\'accueil',  // La route par défaut
-    '/films' => 'Tous les films',
-    '/contact' => 'Page de contact',
-];
+// Inclure manuellement la classe Router
+require_once __DIR__ . '/../src/services/Router.php';
+
+// Créer une instance du Router
+$router = new Router();
+
+// Obtenir le contenu pour la route actuelle
+$content = $router->route();
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ $routes = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Filmoteca</title>
 </head>
 <body>
@@ -33,16 +33,7 @@ $routes = [
 
     <h1>Bienvenue sur Filmoteca</h1>
 
-    <?php
-    // Vérifie si l'URL correspond à une route définie
-    if (array_key_exists($requestUri, $routes)) {
-        // Affiche le contenu en fonction de la route
-        echo "<p>" . $routes[$requestUri] . "</p>";
-    } else {
-        // Si la route n'existe pas, affiche une erreur
-        echo "<p>Page non trouvée</p>";
-    }
-    ?>
+    <p><?php echo $content; ?></p> <!-- Affichage du contenu ici -->
 
 </body>
 
