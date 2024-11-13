@@ -1,0 +1,16 @@
+{
+    "name": "filmoteca/filmoteca",
+    "description": "filmoteca project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Adrien TANDABANY"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
