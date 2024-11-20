@@ -1,23 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 class FilmEntity
 {
     private int $id;
     private string $title;
-    private ?int $year;
+    private ?int $year = null;
     private string $type;
-    private ?string $synopsis;
-    private ?string $director;
-    private ?\DateTimeInterface $deletedAt;
-    private \DateTimeInterface $createdAt;
-    private ?\DateTimeInterface $updatedAt;
+    private ?string $synopsis = null;
+    private ?string $director = null;
+    private ?\DateTime $deletedAt = null;
+    private \DateTime $createdAt;
+    private ?\DateTime $updatedAt = null;
 
-    // Getters et setters (inchangés)
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     public function setTitle(string $title): self
@@ -26,9 +32,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getTitle(): string
+    public function getYear(): ?int
     {
-        return $this->title;
+        return $this->year;
     }
 
     public function setYear(?int $year): self
@@ -37,9 +43,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getYear(): ?int
+    public function getType(): string
     {
-        return $this->year;
+        return $this->type;
     }
 
     public function setType(string $type): self
@@ -48,9 +54,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getType(): string
+    public function getSynopsis(): ?string
     {
-        return $this->type;
+        return $this->synopsis;
     }
 
     public function setSynopsis(?string $synopsis): self
@@ -59,9 +65,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDirector(): ?string
     {
-        return $this->synopsis;
+        return $this->director;
     }
 
     public function setDirector(?string $director): self
@@ -70,40 +76,36 @@ class FilmEntity
         return $this;
     }
 
-    public function getDirector(): ?string
+    public function getDeletedAt(): ?\DateTime
     {
-        return $this->director;
+        return $this->deletedAt;
     }
 
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    public function setDeletedAt(?\DateTime $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTime
     {
-        return $this->deletedAt;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): ?\DateTime
     {
-        return $this->createdAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
         return $this;
     }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
+}

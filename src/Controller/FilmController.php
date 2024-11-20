@@ -1,9 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
+
+use App\Repository\FilmRepository;
 
 class FilmController
 {
+    public function list()
+    {
+        $filmRepository = new FilmRepository();
+        $films = $filmRepository->findAll();
+
+        header('Content-Type: application/json');
+        echo json_encode($films);
+    }
+
     public function create()
     {
         echo "Création d'un film";

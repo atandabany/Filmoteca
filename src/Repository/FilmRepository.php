@@ -2,49 +2,29 @@
 
 namespace App\Repository;
 
-use PDO;
+use App\Core\DatabaseConnection;
+use App\Service\EntityMapper;
+use App\Entity\Film;
 
 class FilmRepository
 {
-    private $pdo;
+    private \PDO $db;
+    private EntityMapper $entityMapperService;
 
-    public function __construct(PDO $pdo)
+    public function __construct()
     {
-        $this->pdo = $pdo;
+        $this->db = DatabaseConnection::getConnection();
+        $this->entityMapperService = new EntityMapper();
     }
 
-    public function getAllFilms(): array
+    public function findAll(): array
     {
-        $stmt = $this->pdo->query("SELECT * FROM films");
-        return $stmt->fetchAll();
-    }
+        $query = 'SELECT * FROM film';
+        $stmt = $this->db->query($query);
 
-    public function getFilmById(int $id): ?array
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM films WHERE id = :id");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch() ?: null;
-    }
+        $films = $stmt->fetchAll();
 
-    public function createFilm(string $title, string $director, int $year): void
-    {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO films (title, director, year) VALUES (:title, :director, :year)"
-        );
-        $stmt->execute(['title' => $title, 'director' => $director, 'year' => $year]);
-    }
-
-    public function updateFilm(int $id, string $title, string $director, int $year): void
-    {
-        $stmt = $this->pdo->prepare(
-            "UPDATE films SET title = :title, director = :director, year = :year WHERE id = :id"
-        );
-        $stmt->execute(['id' => $id, 'title' => $title, 'director' => $director, 'year' => $year]);
-    }
-
-    public function deleteFilm(int $id): void
-    {
-        $stmt = $this->pdo->prepare("DELETE FROM films WHERE id = :id");
-        $stmt->execute(['id' => $id]);
+        // return $this->entityMapperService->mapToEntities($films, Film::class);
+        return $films;
     }
 }
