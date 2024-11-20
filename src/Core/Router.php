@@ -6,7 +6,7 @@ namespace App\Core;
 
 class Router
 {
-    public function route()
+    public function route(): void
     {
         // Récupère l'URL demandée (sans le domaine et la racine)
         $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
