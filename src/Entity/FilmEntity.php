@@ -2,71 +2,22 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity
- * @ORM\Table(name="film")
- */
 class FilmEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
     private int $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private string $title;
-
-    /**
-     * @ORM\Column(type="year", nullable=true)
-     */
-    private ?string $year;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    private ?int $year;
     private string $type;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     private ?string $synopsis;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private ?string $director;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     private ?\DateTimeInterface $deletedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
     private \DateTimeInterface $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     private ?\DateTimeInterface $updatedAt;
 
-    // Getters and Setters
-
+    // Getters et setters (inchangés)
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     public function setTitle(string $title): self
@@ -75,20 +26,20 @@ class FilmEntity
         return $this;
     }
 
-    public function getYear(): ?string
+    public function getTitle(): string
     {
-        return $this->year;
+        return $this->title;
     }
 
-    public function setYear(?string $year): self
+    public function setYear(?int $year): self
     {
         $this->year = $year;
         return $this;
     }
 
-    public function getType(): string
+    public function getYear(): ?int
     {
-        return $this->type;
+        return $this->year;
     }
 
     public function setType(string $type): self
@@ -97,9 +48,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getType(): string
     {
-        return $this->synopsis;
+        return $this->type;
     }
 
     public function setSynopsis(?string $synopsis): self
@@ -108,9 +59,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getDirector(): ?string
+    public function getSynopsis(): ?string
     {
-        return $this->director;
+        return $this->synopsis;
     }
 
     public function setDirector(?string $director): self
@@ -119,9 +70,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeInterface
+    public function getDirector(): ?string
     {
-        return $this->deletedAt;
+        return $this->director;
     }
 
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
@@ -130,9 +81,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getDeletedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->deletedAt;
     }
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self
@@ -141,9 +92,9 @@ class FilmEntity
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->createdAt;
     }
 
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
@@ -151,4 +102,8 @@ class FilmEntity
         $this->updatedAt = $updatedAt;
         return $this;
     }
-}
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
