@@ -8,7 +8,7 @@ class FilmEntity
 {
     private int $id;
     private string $title;
-    private ?int $year = null;
+    private ?string $year = null;
     private string $type;
     private ?string $synopsis = null;
     private ?string $director = null;
@@ -19,6 +19,12 @@ class FilmEntity
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getTitle(): string
@@ -32,12 +38,12 @@ class FilmEntity
         return $this;
     }
 
-    public function getYear(): ?int
+    public function getYear(): ?string
     {
         return $this->year;
     }
 
-    public function setYear(?int $year): self
+    public function setYear(?string $year): self
     {
         $this->year = $year;
         return $this;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 class EntityMapper
@@ -11,7 +13,13 @@ class EntityMapper
 
         // Pour chaque champ de l'entité, assigner la valeur correspondante dans $data
         foreach ($data as $key => $value) {
-            $setter = 'set' . ucfirst($key);
+            $setterKey = str_replace('_', '', ucwords($key, '_'));
+            $setter = 'set' . $setterKey;
+
+            // Si le champ contient "at" (ex : created_at), convertir en DateTime
+            if (str_contains($key, '_at') && null !== $value) {
+                $value = new \DateTime($value);
+            }
 
             // Si le setter existe, on l'appelle
             if (method_exists($entity, $setter)) {
