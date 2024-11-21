@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\FilmEntity;
 use App\Repository\FilmRepository;
+use App\Core\TwigEnvironment;
 
 class FilmController
 {
@@ -29,10 +30,19 @@ class FilmController
             $filmEntities[] = $filmEntity;
         } */
 
-        dd($films);
+        // dd($films);
 
         // header('Content-Type: application/json');
         // echo json_encode($films);
+
+
+        // Charger Twig
+        $twig = TwigEnvironment::create();
+
+        // Rendre la vue Twig
+        echo $twig->render('list.html.twig', [
+            'films' => $films, // On passe les films à la vue
+        ]);
     }
 
     public function create()

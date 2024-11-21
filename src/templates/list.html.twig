@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des films</title>
+</head>
+<body>
+    <h1>Liste des films</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Année</th>
+                <th>Type</th>
+                <th>Synopsis</th>
+                <th>Réalisateur</th>
+                <th>Date de suppression</th>
+                <th>Date de création</th>
+                <th>Date de mise à jour</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for film in films %}
+                <tr>
+                    <td>{{ film.id }}</td>
+                    <td>{{ film.title }}</td>
+                    <td>{{ film.year }}</td>
+                    <td>{{ film.type }}</td>
+                    <td>{{ film.synopsis }}</td>
+                    <td>{{ film.director }}</td>
+                    <td>{{ film.deletedAt ? film.deletedAt|date('Y-m-d H:i:s') : 'null' }}</td>
+                    <td>{{ film.createdAt ? film.createdAt|date('Y-m-d H:i:s') : 'null' }}</td> 
+                    <td>{{ film.updatedAt ? film.updatedAt|date('Y-m-d H:i:s') : 'null' }}</td> 
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
