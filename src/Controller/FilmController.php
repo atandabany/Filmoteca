@@ -10,10 +10,22 @@ use App\Core\TwigEnvironment;
 
 class FilmController
 {
+
+    private FilmRepository $filmRepository;
+    private \Twig\Environment $twig;
+
+    public function __construct()
+    {
+        $this->filmRepository = new FilmRepository();
+        $this->twig = TwigEnvironment::create();
+    }
+
     public function list(array $queryParams)
     {
-        $filmRepository = new FilmRepository();
-        $films = $filmRepository->findAll();
+        //$filmRepository = new FilmRepository();
+        //$films = $filmRepository->findAll();
+
+       
 
         /* $filmEntities = [];
         foreach ($films as $film) {
@@ -37,10 +49,13 @@ class FilmController
 
 
         // Charger Twig
-        $twig = TwigEnvironment::create();
+        //$twig = TwigEnvironment::create();
 
         // Rendre la vue Twig
-        echo $twig->render('list.html.twig', [
+        $films = $this->filmRepository->findAll();
+
+        // Utilisation de Twig pour rendre la vue
+        echo $this->twig->render('list.html.twig', [
             'films' => $films, // On passe les films à la vue
         ]);
     }
