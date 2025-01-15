@@ -53,13 +53,14 @@ class FilmRepository
         return $this->entityMapperService->mapToEntity($film, Film::class);
     }
 
-    public function save(Film $film): void{
-        
+
+    public function save(Film $film): void
+    {
         $query = 'INSERT INTO film (title, year, type, director, synopsis, created_at, updated_at) 
                 VALUES (:title, :year, :type, :director, :synopsis, :created_at, :updated_at)';
+
         $stmt = $this->db->prepare($query);
 
-        // Liaison des paramètres avec les propriétés de l'objet Film
         $stmt->execute([
             'title' => $film->getTitle(),
             'year' => $film->getYear(),
@@ -71,17 +72,18 @@ class FilmRepository
         ]);
     }
 
-    public function delete(int $id): void
-{
-    // Requête SQL pour supprimer un film par son identifiant
-    $query = 'DELETE FROM film WHERE id = :id';
-    $stmt = $this->db->prepare($query);
-    $stmt->execute(['id' => $id]);
-}
 
-public function modify(Film $film): void
-{
-    $query = 'UPDATE film SET 
+    public function delete(int $id): void
+    {
+        $query = 'DELETE FROM film WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['id' => $id]);
+    }
+
+
+    public function modify(Film $film): void
+    {
+        $query = 'UPDATE film SET 
         title = :title,
         year = :year,
         type = :type,
@@ -91,21 +93,17 @@ public function modify(Film $film): void
         updated_at = :updated_at
         WHERE id = :id';
 
-    $stmt = $this->db->prepare($query);
+        $stmt = $this->db->prepare($query);
 
-    $stmt->execute([
-        'title' => $film->getTitle(),
-        'year' => $film->getYear(),
-        'type' => $film->getType(),
-        'director' => $film->getDirector(),
-        'synopsis' => $film->getSynopsis(),
-        'created_at' => $film->getCreatedAt()->format('Y-m-d H:i:s'),
-        'updated_at' => $film->getUpdatedAt()->format('Y-m-d H:i:s'),
-        'id' => $film->getId(),
-    ]);
-}
-
-
-
-
+        $stmt->execute([
+            'title' => $film->getTitle(),
+            'year' => $film->getYear(),
+            'type' => $film->getType(),
+            'director' => $film->getDirector(),
+            'synopsis' => $film->getSynopsis(),
+            'created_at' => $film->getCreatedAt()->format('Y-m-d H:i:s'),
+            'updated_at' => $film->getUpdatedAt()->format('Y-m-d H:i:s'),
+            'id' => $film->getId(),
+        ]);
+    }
 }

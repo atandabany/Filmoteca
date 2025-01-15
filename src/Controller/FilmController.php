@@ -7,7 +7,8 @@ namespace App\Controller;
 use App\Core\TemplateRenderer;
 use App\Entity\Film;
 use App\Repository\FilmRepository;
-use App\Service\EntityMapper; 
+use App\Service\EntityMapper;
+
 class FilmController
 {
     private TemplateRenderer $renderer;
@@ -47,33 +48,26 @@ class FilmController
         // echo json_encode($films);
     }
 
+
     public function create(): void
     {
         $filmRepository = new FilmRepository();
         $entityMapper = new EntityMapper();
 
-        // Si le formulaire est soumis
         if (!empty($_POST)) {
-            // Mapper les données POST vers une entité Film
             try {
-                $film = $entityMapper->mapToEntity(data : $_POST, entityClass : Film::class);
+                $film = $entityMapper->mapToEntity(data: $_POST, entityClass: Film::class);
                 $film->setCreatedAt(new \DateTime());
                 $film->setUpdatedAt(new \DateTime());
-
                 $filmRepository->save($film);
-
-                // Rediriger vers liste des films 
-                header('Location: /film/list'); 
+                header('Location: /film/list');
                 exit;
             } catch (\Exception $exception) {
-                
+                echo 'Erreur: ' . $exception->getMessage();
             }
         }
-
-        echo $this->renderer->render('film/create.html.twig'); 
+        echo $this->renderer->render('film/create.html.twig');
     }
-
-
 
 
     public function read(array $queryParams)
@@ -81,67 +75,42 @@ class FilmController
         $filmRepository = new FilmRepository();
         $film = $filmRepository->find((int) $queryParams['id']);
         echo $this->renderer->render('film/read.html.twig', ['film' => $film,]);
-        
-        
-        dd($film); //A retirer
+        //dd($film);
     }
+
 
     public function update(array $queryParams)
-{
-    $filmRepository = new FilmRepository();
-    $entityMapper = new EntityMapper();
-
-    // Récupérer le film à mettre à jour en fonction de son ID
-    $originalFilm = $filmRepository->find((int) $queryParams['id']);
-
-    // Si le formulaire est soumis
-    if (!empty($_POST)) {
-        try {
-            // Mapper les données POST vers une nouvelle entité Film
-            $film = $entityMapper->mapToEntity($_POST, Film::class);
-
-            // Conserver l'ID et la date de création de l'objet d'origine
-            $film->setId($originalFilm->getId());
-            $film->setCreatedAt($originalFilm->getCreatedAt());
-
-            // Mettre à jour la date de modification
-            $film->setUpdatedAt(new \DateTime());
-
-            // Sauvegarder les modifications
-            $filmRepository->modify($film);
-
-            // Rediriger vers la liste des films après la mise à jour
-            header('Location: /film/list');
-            exit;
-        } catch (\Exception $exception) {
-            // Gérer les erreurs si le mappage échoue
-            echo 'Erreur: ' . $exception->getMessage();
+    {
+        if (isset($queryParams['id'])) {
+            $filmRepository = new FilmRepository();
+            $entityMapper = new EntityMapper();
+            $film = $filmRepository->find((int) $queryParams['id']);
+            if (!empty($_POST)) {
+                try {
+                    $updatedFilm = $entityMapper->mapToEntity($_POST, Film::class);
+                    $updatedFilm->setId($film->getId());
+                    $updatedFilm->setCreatedAt($film->getCreatedAt());
+                    $updatedFilm->setUpdatedAt(new \DateTime()); 
+                    $filmRepository->modify($updatedFilm);
+                    header('Location: /film/list');
+                    exit;
+                } catch (\Exception $exception) {
+                    echo 'Erreur: ' . $exception->getMessage();
+                }
+            }
+            echo $this->renderer->render('film/update.html.twig', ['film' => $film]);
         }
     }
-
-    // Rendre le formulaire avec les données du film
-    echo $this->renderer->render('film/update.html.twig', ['film' => $originalFilm]);
-}
-
-
-
-
 
 
     public function delete()
     {
-        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+        if (isset($_GET['id'])) {
             $filmRepository = new FilmRepository();
-            $filmId = (int) $_GET['id']; // Récupérer l'ID du film
-
+            $filmId = (int) $_GET['id'];
             $filmRepository->delete($filmId);
-
-            // Rediriger vers la liste des films après la suppression
             header('Location: /film/list');
             exit;
         }
     }
-        
-        
-
 }
