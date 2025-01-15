@@ -86,10 +86,47 @@ class FilmController
         dd($film); //A retirer
     }
 
-    public function update()
-    {
-        echo "Mise à jour d'un film";
+    public function update(array $queryParams)
+{
+    $filmRepository = new FilmRepository();
+    $entityMapper = new EntityMapper();
+
+    // Récupérer le film à mettre à jour en fonction de son ID
+    $originalFilm = $filmRepository->find((int) $queryParams['id']);
+
+    // Si le formulaire est soumis
+    if (!empty($_POST)) {
+        try {
+            // Mapper les données POST vers une nouvelle entité Film
+            $film = $entityMapper->mapToEntity($_POST, Film::class);
+
+            // Conserver l'ID et la date de création de l'objet d'origine
+            $film->setId($originalFilm->getId());
+            $film->setCreatedAt($originalFilm->getCreatedAt());
+
+            // Mettre à jour la date de modification
+            $film->setUpdatedAt(new \DateTime());
+
+            // Sauvegarder les modifications
+            $filmRepository->modify($film);
+
+            // Rediriger vers la liste des films après la mise à jour
+            header('Location: /film/list');
+            exit;
+        } catch (\Exception $exception) {
+            // Gérer les erreurs si le mappage échoue
+            echo 'Erreur: ' . $exception->getMessage();
+        }
     }
+
+    // Rendre le formulaire avec les données du film
+    echo $this->renderer->render('film/update.html.twig', ['film' => $originalFilm]);
+}
+
+
+
+
+
 
     public function delete()
     {

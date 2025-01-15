@@ -79,4 +79,33 @@ class FilmRepository
     $stmt->execute(['id' => $id]);
 }
 
+public function modify(Film $film): void
+{
+    $query = 'UPDATE film SET 
+        title = :title,
+        year = :year,
+        type = :type,
+        director = :director,
+        synopsis = :synopsis,
+        created_at = :created_at,
+        updated_at = :updated_at
+        WHERE id = :id';
+
+    $stmt = $this->db->prepare($query);
+
+    $stmt->execute([
+        'title' => $film->getTitle(),
+        'year' => $film->getYear(),
+        'type' => $film->getType(),
+        'director' => $film->getDirector(),
+        'synopsis' => $film->getSynopsis(),
+        'created_at' => $film->getCreatedAt()->format('Y-m-d H:i:s'),
+        'updated_at' => $film->getUpdatedAt()->format('Y-m-d H:i:s'),
+        'id' => $film->getId(),
+    ]);
+}
+
+
+
+
 }

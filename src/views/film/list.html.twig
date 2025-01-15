@@ -40,10 +40,8 @@
 						<td>{{ film.updatedAt.format('d/m/Y H:i') }}</td>
 						<td>
 							<a href="/film/read?id={{ film.id }}" class="btn btn-primary btn-sm" style="background-color: #6a0dad; border-color: #6a0dad;">Détails</a>
-							<a href="/film/delete?id={{ film.id }}" class="btn btn-dark btn-sm" onclick="return confirm('Sûr de vouloir supprimer ce film ?');">
-								<i class="fas fa-trash-alt"></i>
-								Supprimer
-							</a>
+                            <a href="/film/update?id={{ film.id }}" class="btn btn-warning btn-sm">Mettre à jour</a>
+							<a href="/film/delete?id={{ film.id }}" class="btn btn-dark btn-sm" onclick="return confirm('Sûr de vouloir supprimer ce film ?');"><i class="fas fa-trash-alt"></i>Supprimer</a>
 
 						</td>
 					</tr>
