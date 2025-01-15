@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-class FilmEntity
+class Film
 {
     private int $id;
     private string $title;
@@ -12,9 +12,11 @@ class FilmEntity
     private string $type;
     private ?string $synopsis = null;
     private ?string $director = null;
-    private ?\DateTime $deletedAt = null;
     private \DateTime $createdAt;
+    private ?\DateTime $deletedAt = null;
     private ?\DateTime $updatedAt = null;
+    
+    
 
     public function getId(): int
     {

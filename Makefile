@@ -36,3 +36,7 @@ start:
 # Run composer install
 composer-install:
 	docker exec $(DOCKER_PHP_CONTAINER) composer install
+
+# Regénérer l'autoloading de Composer
+dump-autoload:
+	docker exec $(DOCKER_PHP_CONTAINER) composer dump-autoload

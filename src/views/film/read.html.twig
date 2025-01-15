@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du film : {{ film.title }}{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">
+        <i class="fas fa-film" aria-hidden="true"></i> Détails du film : {{ film.title }}
+    </h2>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>ID</th>
+            <td>{{ film.id }}</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{ film.title }}</td>
+        </tr>
+        <tr>
+            <th>Année</th>
+            <td>{{ film.year }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ film.type }}</td>
+        </tr>
+        <tr>
+            <th>Réalisateur</th>
+            <td>{{ film.director }}</td>
+        </tr>
+        <tr>
+            <th>Synopsis</th>
+            <td>{{ film.synopsis }}</td>
+        </tr>
+        <tr>
+            <th>Ajouté le</th>
+            <td>{{ film.createdAt.format('d/m/Y H:i') }}</td>
+        </tr>
+        <tr>
+            <th>Modifié le</th>
+            <td>{{ film.updatedAt.format('d/m/Y H:i') }}</td>
+        </tr>
+    </table>
+
+    <a href="/film/list" class="btn btn-primary">Retour à la liste</a>
+{% endblock %}
